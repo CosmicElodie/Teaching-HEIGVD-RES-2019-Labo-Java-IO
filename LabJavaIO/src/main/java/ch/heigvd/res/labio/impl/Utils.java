@@ -19,8 +19,40 @@ public class Utils {
    * the line separator, the second element is the remaining text. If the argument does not
    * contain any line separator, then the first element is an empty string.
    */
-  public static String[] getNextLine(String lines) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
-  }
+  public static String[] getNextLine(String lines)
+  {
+    String separators[] = {"\r\n", "\r", "\n"}, res[] = {"", ""}, separator = "";
+    int idx = separators.length, idxSep = lines.length(), i = 0, check[] = new int[idx];
 
+
+    //On recherche les 3 séparateurs et leur index.
+    while(i < idx)
+    {
+      check[i] = lines.indexOf(separators[i]);
+
+      if ((idxSep > check[i]) && (check[i] != -1 ))
+      {
+        separator = separators[i];
+        idxSep = check[i];
+      }
+      ++i;
+    }
+
+    int resInt = idxSep + separator.length();
+
+
+    //Le 1er élément est la ligne + son séparateur
+    //Le 2nd élément est le reste du texte.
+    if (!separator.isEmpty()) {
+      res[0] = lines.substring(0, resInt);
+      res[1] = lines.substring(resInt);
+    }
+    else
+    //Si l'argument ne contient pas de séparateur, alors le premier élément est une string vide.
+    {
+      res[1] = lines;
+    }
+
+    return res;
+  }
 }
