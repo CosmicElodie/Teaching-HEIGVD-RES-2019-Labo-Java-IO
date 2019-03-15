@@ -18,18 +18,17 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor vistor) throws IOException {
-    File[] d = rootDirectory.listFiles();
-
     vistor.visit(rootDirectory);
 
-    if(d != null)
+    if(rootDirectory.isDirectory())
     {
-     Arrays.sort(d);
+        File[] d = rootDirectory.listFiles();
+        Arrays.sort(d);
 
       for(File f : d)
       {
         //if file...
-        if(f.isFile())
+        if(!f.isDirectory())
         {
           vistor.visit(f);
         }
