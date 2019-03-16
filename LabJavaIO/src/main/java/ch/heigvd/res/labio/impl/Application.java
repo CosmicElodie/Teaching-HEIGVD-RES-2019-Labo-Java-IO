@@ -147,7 +147,7 @@ public class Application implements IApplication {
     IFileExplorer explorer = new DFSFileExplorer();
     explorer.explore(new File(WORKSPACE_DIRECTORY), new IFileVisitor() {
       @Override
-      public void visit(File file) throws IOException {
+      public void visit(File file) {
         /*
          * There is a missing piece here. Notice how we use an anonymous class here. We provide the implementation
          * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should

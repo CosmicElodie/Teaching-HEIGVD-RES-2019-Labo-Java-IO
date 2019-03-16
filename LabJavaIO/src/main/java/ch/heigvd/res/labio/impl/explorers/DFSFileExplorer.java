@@ -2,6 +2,7 @@ package ch.heigvd.res.labio.impl.explorers;
 
 import ch.heigvd.res.labio.interfaces.IFileExplorer;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,33 +12,29 @@ import java.util.Arrays;
  * exploration of the file system and invokes the visitor for every encountered
  * node (file and directory). When the explorer reaches a directory, it visits all
  * files in the directory and then moves into the subdirectories.
- * 
+ *
  * @author Olivier Liechti
  */
 public class DFSFileExplorer implements IFileExplorer {
 
-  @Override
-  public void explore(File rootDirectory, IFileVisitor vistor) throws IOException {
-    vistor.visit(rootDirectory);
+    @Override
+    public void explore(File rootDirectory, IFileVisitor vistor) {
+        vistor.visit(rootDirectory);
 
-    if(rootDirectory.isDirectory())
-    {
-        File[] d = rootDirectory.listFiles();
-        Arrays.sort(d);
+        if (rootDirectory.isDirectory()) {
+            File[] d = rootDirectory.listFiles();
+            Arrays.sort(d);
 
-      for(File f : d)
-      {
-        //if file...
-        if(!f.isDirectory())
-        {
-          vistor.visit(f);
+            for (File f : d) {
+                //if file...
+                if (!f.isDirectory()) {
+                    vistor.visit(f);
+                }
+                //if directory ...
+                else {
+                    explore(f, vistor);
+                }
+            }
         }
-        //if directory ...
-        else
-        {
-          explore(f, vistor);
-        }
-      }
     }
-  }
 }
